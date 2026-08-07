@@ -1,49 +1,61 @@
 import os
-import sqlite3
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
-DB_PATH = os.path.join('instance', 'customer_segmentation.db')
+# Fetch DATABASE_URL from Render Environment Variables
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+# Render postgres URLs sometimes start with "postgres://", which psycopg2 requires as "postgresql://"
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 
 def get_db():
-    """Creates a connection to the SQLite database."""
-    os.makedirs('instance', exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+    if not DATABASE_URL:
+        raise ValueError("DATABASE_URL environment variable is not set on Render.")
+    conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
     return conn
 
+
 def init_db():
-    """Initializes SQLite database tables for users and predictions."""
+    if not DATABASE_URL:
+        print("DATABASE_URL not found, skipping database initialization.")
+        return
+
     conn = get_db()
     cursor = conn.cursor()
-    
-    # 1. Predictions Table
+
+    # Create predictions table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS predictions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            gender TEXT,
+            id SERIAL PRIMARY KEY,
+            gender VARCHAR(20),
             age INTEGER,
             income REAL,
             spending INTEGER,
             cluster INTEGER,
-            label TEXT,
+            label VARCHAR(100),
             description TEXT,
             recommendation TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
+        );
     ''')
-    
-    # 2. Users Table for Authentication
+
+    # Create users table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            fullname TEXT NOT NULL,
-            email TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL,
+            id SERIAL PRIMARY KEY,
+            fullname VARCHAR(100) NOT NULL,
+            email VARCHAR(120) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
+        );
     ''')
-    
+
     conn.commit()
+    cursor.close()
     conn.close()
+
 
 if __name__ == '__main__':
     init_db()
