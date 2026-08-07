@@ -48,6 +48,12 @@
                     <span>History</span>
                 </a>
             </li>
+             <li>
+                <a href="{{ url_for('about') }}" class="nav-link">
+                    <i class="bi bi-info-circle me-2"></i> 
+                    <span>About</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ url_for('logout') }}" class="nav-link" style="color: #fca5a5;">
                     <i class="bi bi-box-arrow-right"></i>
@@ -67,12 +73,7 @@
                     <span>Register</span>
                 </a>
             </li>
-              <li>
-                <a href="{{ url_for('about') }}" class="nav-link">
-                    <i class="bi bi-info-circle me-2"></i> 
-                    <span>About</span>
-                </a>
-            </li>
+             
            
             {% endif %}
         
