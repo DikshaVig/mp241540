@@ -13,7 +13,7 @@ app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 app.secret_key = 'customer_segmentation_secret_key_change_in_production'
 
 
-from utiles.predictor import predict_segment
+from utils.predictor import predict_segment
 from recommendation import get_strategy
 from database import get_db, init_db
 
