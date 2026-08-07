@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-card" style="margin-bottom: 1.5rem;">
+    <div class="card-title-group">
+        <i class="bi bi-bar-chart-line-fill" style="color: var(--primary-blue);"></i>
+        <span>Clustering Algorithm Performance Comparison</span>
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="border-bottom: 2px solid #e2e8f0; background: #f8fafc; color: #475569;">
+                    <th style="padding: 12px;">Algorithm</th>
+                    <th style="padding: 12px;">Silhouette Score</th>
+                    <th style="padding: 12px;">Davies-Bouldin Index</th>
+                    <th style="padding: 12px;">Calinski-Harabasz</th>
+                    <th style="padding: 12px;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in metrics %}
+                {% if m.status == 'Best Model' %}
+                <tr style="border-bottom: 1px solid #e2e8f0; background-color: #f0fdf4;">
+                {% else %}
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                {% endif %}
+                    <td style="padding: 12px; font-weight: 700;">{{ m.algorithm }}</td>
+                    <td style="padding: 12px;">{{ m.silhouette }}</td>
+                    <td style="padding: 12px;">{{ m.davies_bouldin }}</td>
+                    <td style="padding: 12px;">{{ m.calinski }}</td>
+                    <td style="padding: 12px;">
+                        {% if m.status == 'Best Model' %}
+                            <span style="background: #16a34a; color: white; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Selected Model</span>
+                        {% else %}
+                            <span style="background: #e2e8f0; color: #475569; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;">Evaluated</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title-group">
+        <i class="bi bi-graph-up" style="color: var(--primary-blue);"></i>
+        <span>Silhouette Score Visualization</span>
+    </div>
+    
+    <!-- Canvas container with explicit height -->
+    <div style="position: relative; height: 320px; width: 100%;">
+        <canvas id="metricsChart"></canvas>
+    </div>
+</div>
+
+<!-- Direct Chart.js Script execution to bypass browser JS file caching -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.getElementById('metricsChart');
+        if (canvas) {
+            new Chart(canvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['K-Means', 'Agglomerative', 'Hierarchical', 'DBSCAN'],
+                    datasets: [{
+                        label: 'Silhouette Score',
+                        data: [0.554, 0.523, 0.518, 0.412],
+                        backgroundColor: [
+                            '#1d5bd8',
+                            '#94a3b8',
+                            '#94a3b8',
+                            '#94a3b8'
+                        ],
+                        borderRadius: 6,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 0.7,
+                            grid: {
+                                color: '#e2e8f0'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

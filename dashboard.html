@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="metrics-grid">
+    <div class="metric-card">
+        <div class="metric-icon-box icon-blue"><i class="bi bi-people-fill"></i></div>
+        <span class="label">Total Evaluations</span>
+        <span class="value value-blue">{{ total }}</span>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box icon-green"><i class="bi bi-diagram-3-fill"></i></div>
+        <span class="label">Total Segments</span>
+        <span class="value value-green">5</span>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box icon-target"><i class="bi bi-cpu-fill"></i></div>
+        <span class="label">ML Algorithm</span>
+        <span class="value value-target" style="font-size: 1.3rem;">K-Means</span>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box icon-red"><i class="bi bi-database-check"></i></div>
+        <span class="label">Database Engine</span>
+        <span class="value value-red" style="font-size: 1.3rem;">SQLite3</span>
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title-group">
+        <i class="bi bi-clock-history" style="color: var(--primary-blue);"></i>
+        <span>Recent Customer Predictions Log</span>
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="border-bottom: 2px solid #e2e8f0; color: #64748b;">
+                    <th style="padding: 12px;">ID</th>
+                    <th style="padding: 12px;">Gender</th>
+                    <th style="padding: 12px;">Age</th>
+                    <th style="padding: 12px;">Income</th>
+                    <th style="padding: 12px;">Spending</th>
+                    <th style="padding: 12px;">Cluster Label</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in recents %}
+                <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 12px; font-weight: 600;">#{{ r.id }}</td>
+                    <td style="padding: 12px;">{{ r.gender }}</td>
+                    <td style="padding: 12px;">{{ r.age }}</td>
+                    <td style="padding: 12px;">${{ r.income }}k</td>
+                    <td style="padding: 12px;">{{ r.spending }}</td>
+                    <td style="padding: 12px;">
+                        <span style="background: #eff6ff; color: #2563eb; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">
+                            {{ r.label }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="padding: 20px; text-align: center; color: #94a3b8;">No predictions recorded in SQLite yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

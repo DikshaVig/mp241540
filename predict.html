@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Top Metrics Row (Segmentation Domain) -->
+<div class="metrics-grid">
+    <div class="metric-card">
+        <div class="metric-icon-box icon-blue"><i class="bi bi-people-fill"></i></div>
+        <span class="label">Total Evaluations</span>
+        <span class="value value-blue">200+</span>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box icon-green"><i class="bi bi-gem"></i></div>
+        <span class="label">VIP Segments</span>
+        <span class="value value-green">22%</span>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box icon-target"><i class="bi bi-wallet2"></i></div>
+        <span class="label">Budget Spenders</span>
+        <span class="value value-target">38%</span>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box icon-red"><i class="bi bi-cpu-fill"></i></div>
+        <span class="label">K-Means Score</span>
+        <span class="value value-red" style="font-size: 1.4rem;">0.554</span>
+    </div>
+</div>
+
+<!-- Input Form & Output Display -->
+<div class="content-grid">
+    <!-- Customer Input Form Card -->
+    <div class="content-card">
+        <div class="card-title-group">
+            <i class="bi bi-person-vcard-fill" style="color: var(--primary-blue);"></i>
+            <span>Customer Demographics Input</span>
+        </div>
+
+        <form action="{{ url_for('predict') }}" method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="age" class="form-control" placeholder="e.g. 35" min="18" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select name="gender" class="form-select" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Annual Income (k$)</label>
+                    <input type="number" step="0.1" name="annual_income" class="form-control" placeholder="e.g. 75" required>
+                </div>
+                <div class="form-group">
+                    <label>Spending Score (1-100)</label>
+                    <input type="number" name="spending_score" class="form-control" placeholder="e.g. 81" min="1" max="100" required>
+                </div>
+                <button type="submit" class="submit-btn">Evaluate Customer Segment</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- AI Output Card: Label -> Description -> Recommendation -->
+    <div class="content-card">
+        <div class="card-title-group" style="justify-content: center;">
+            <i class="bi bi-pie-chart-fill" style="color: var(--primary-blue);"></i>
+            <span>Segmentation Strategy Output</span>
+        </div>
+
+        <div class="result-card-body">
+            {% if result %}
+                <!-- Cluster Donut Gauge -->
+                <div class="donut-gauge" style="--percentage: {{ (cluster_id + 1) * 20 }};">
+                    <div class="donut-inner">
+                        #{{ cluster_id }}
+                    </div>
+                </div>
+
+                <!-- Structured Output: Label -> Description -> Recommendation -->
+                <div class="output-box" style="width: 100%; text-align: left; margin-top: 0.5rem;">
+                    
+                    <!-- 1. Cluster Label -->
+                    <div style="background: #eff6ff; padding: 10px 14px; border-radius: 8px; margin-bottom: 8px;">
+                        <small style="color: #2563eb; font-weight: 700; text-transform: uppercase;">1. Cluster Label</small>
+                        <div style="font-size: 1.05rem; font-weight: 700; color: #1e293b;">{{ insight.label }}</div>
+                    </div>
+
+                    <!-- 2. Description -->
+                    <div style="background: #f8fafc; padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #e2e8f0;">
+                        <small style="color: #64748b; font-weight: 700; text-transform: uppercase;">2. Description</small>
+                        <div style="font-size: 0.9rem; font-weight: 600; color: #334155;">{{ insight.description }}</div>
+                    </div>
+
+                    <!-- 3. Recommendation -->
+                    <div style="background: #f0fdf4; padding: 10px 14px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                        <small style="color: #16a34a; font-weight: 700; text-transform: uppercase;">3. Business Recommendation</small>
+                        <div style="font-size: 0.85rem; color: #166534; font-weight: 500;">{{ insight.recommendation }}</div>
+                    </div>
+
+                </div>
+            {% else %}
+                <div class="donut-gauge" style="--percentage: 0;">
+                    <div class="donut-inner">0%</div>
+                </div>
+                <div class="status-text">Awaiting Customer Input</div>
+                <p class="description-text">Enter income and spending metrics on the left to classify the customer group.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

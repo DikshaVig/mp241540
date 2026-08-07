@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-card">
+    <div class="card-title-group">
+        <i class="bi bi-database-fill" style="color: var(--primary-blue);"></i>
+        <span>Complete Prediction Records (SQLite Database)</span>
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+                <tr style="border-bottom: 2px solid #e2e8f0; color: #64748b; background: #f8fafc;">
+                    <th style="padding: 12px;">#</th>
+                    <th style="padding: 12px;">Gender</th>
+                    <th style="padding: 12px;">Age</th>
+                    <th style="padding: 12px;">Income</th>
+                    <th style="padding: 12px;">Spending</th>
+                    <th style="padding: 12px;">Cluster Label</th>
+                    <th style="padding: 12px;">Description</th>
+                    <th style="padding: 12px;">Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in records %}
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 12px; font-weight: 700;">{{ item.id }}</td>
+                    <td style="padding: 12px;">{{ item.gender }}</td>
+                    <td style="padding: 12px;">{{ item.age }}</td>
+                    <td style="padding: 12px;">${{ item.income }}k</td>
+                    <td style="padding: 12px;">{{ item.spending }}</td>
+                    <td style="padding: 12px; font-weight: 600; color: #1d5bd8;">{{ item.label }}</td>
+                    <td style="padding: 12px; color: #475569;">{{ item.description }}</td>
+                    <td style="padding: 12px; color: #166534; font-size: 0.85rem;">{{ item.recommendation }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" style="padding: 2rem; text-align: center; color: #94a3b8;">No customer evaluation history found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
