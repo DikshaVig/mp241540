@@ -3,8 +3,8 @@ import joblib
 import numpy as np
 
 # Load pre-trained .pkl files generated from Google Colab
-MODEL_PATH = os.path.join('model', 'model.pkl')
-SCALER_PATH = os.path.join('model', 'scaler.pkl')
+MODEL_PATH = os.path.join('model', 'model (1).pkl')
+SCALER_PATH = os.path.join('model', 'scaler (3).pkl')
 
 def predict_segment(gender, age, income, spending):
     """
