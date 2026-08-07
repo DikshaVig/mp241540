@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}About - Customer Analytics Platform{% endblock %}
+
+{% block content %}
+<div style="padding: 24px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 1200px; margin: 0 auto;">
+
+    <!-- Header Section -->
+    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #ffffff; border-radius: 16px; padding: 36px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h1 style="margin: 0 0 12px 0; font-size: 2rem; font-weight: 700;">About Customer Segmentation</h1>
+        <p style="margin: 0; font-size: 1.05rem; color: #cbd5e1; max-width: 800px; line-height: 1.6;">
+            Customer Segmentation is the practice of dividing a company's customer base into distinct groups that reflect similarities among customers in each group. This platform utilizes Unsupervised Machine Learning to automatically categorize customers based on demographic and behavioral metrics.
+        </p>
+    </div>
+
+    <!-- Core Objectives & ML Methodology -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 35px;">
+        
+        <!-- Purpose Card -->
+        <div style="background: #ffffff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eef2f6;">
+            <div style="background-color: #eff6ff; color: #2563eb; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 16px;">
+                <i class="bi bi-bullseye"></i>
+            </div>
+            <h3 style="margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 700; color: #0f172a;">Why Segment Customers?</h3>
+            <p style="margin: 0; font-size: 0.95rem; color: #64748b; line-height: 1.5;">
+                Businesses use customer segmentation to design targeted marketing strategies, optimize product pricing, customize loyalty programs, and improve overall customer retention by delivering tailored experiences.
+            </p>
+        </div>
+
+        <!-- Model Evaluation Card -->
+        <div style="background: #ffffff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eef2f6;">
+            <div style="background-color: #f0f9ff; color: #0284c7; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 16px;">
+                <i class="bi bi-cpu-fill"></i>
+            </div>
+            <h3 style="margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 700; color: #0f172a;">Model Evaluation & Selection</h3>
+            <p style="margin: 0; font-size: 0.95rem; color: #64748b; line-height: 1.5;">
+                The project evaluates multiple clustering algorithms (including K-Means, Agglomerative, Hierarchical, and DBSCAN) using key evaluation metrics such as <strong style="color: #0f172a;">Silhouette Score, Davies-Bouldin Index, Calinski-Harabasz Index, and Inertia</strong>. Based on comprehensive analysis across these metrics, <strong style="color: #2563eb;">K-Means was selected as the best-performing algorithm</strong> for predictions.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Project Team Section -->
+    <div style="background: #ffffff; border-radius: 16px; padding: 32px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eef2f6;">
+        <div style="margin-bottom: 24px;">
+            <h3 style="margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                <i class="bi bi-people-fill" style="color: #2563eb;"></i>
+                <span>Project Team</span>
+            </h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #64748b;">
+                Developed and implemented as part of the Customer Analytics Platform project.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+            
+            <!-- Team Member 1 -->
+            <div style="background: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 16px;">
+                <div style="background-color: #2563eb; color: #ffffff; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;">
+                    K
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 700; color: #0f172a;">Kanishka</h4>
+                    <span style="font-size: 0.85rem; color: #64748b; background-color: #e2e8f0; padding: 2px 8px; border-radius: 6px;">Team Member</span>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div style="background: #f8fafc; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 16px;">
+                <div style="background-color: #10b981; color: #ffffff; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;">
+                    DV
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 700; color: #0f172a;">Diksha Vig</h4>
+                    <span style="font-size: 0.85rem; color: #64748b; background-color: #e2e8f0; padding: 2px 8px; border-radius: 6px;">Team Member</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
